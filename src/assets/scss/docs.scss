@@ -1,0 +1,18 @@
+@charset 'utf-8';
+
+// Scss 全局默认变量
+@import 'abstracts/variables';
+
+// 自定义部分
+@import 'abstracts/functions';
+@import 'abstracts/mixins';
+
+@import 'base/reset';
+@import 'base/typography';
+
+@import 'components/nav-bar';
+@import 'components/foot-info';
+
+
+@import 'views/login';
+@import 'views/home';

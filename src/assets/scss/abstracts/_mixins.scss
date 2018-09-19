@@ -1,0 +1,69 @@
+@charset 'utf-8';
+
+/**
+ * 容器维度定义简便 mixin
+ *
+ * @param {String} $w - 容器宽度
+ * @param {String} $h - 容器高度，如缺省，则高度 = 宽度
+ */
+@mixin size($w, $h: $w) {
+  width: $w;
+  height: $h;
+}
+
+/**
+ * 容器定位 mixin
+ *
+ * @param $position - 定位方式：relative | absolute | fixed
+ * @param $argus - 定位尺寸，eg: top 10px left 20px
+ */
+@mixin position($position, $argus) {
+  @each $o in top right bottom left {
+    $i: index($argus, $o);
+    @if $i and
+        $i + 1 <= length($argus) and
+        type-of(nth($argus, $i + 1)) == number {
+      #{$o}: nth($argus, $i + 1);
+    }
+  }
+  position: $position;
+}
+
+/**
+ * 绝对定位 mixin，二次封装自 @mixin position
+ *
+ * @param $argus - 定位尺寸
+ */
+@mixin absolute($argus: '') {
+  @include position(absolute, $argus);
+}
+
+/**
+ * 固定定位 mixin，二次封装自 @mixin position
+ *
+ * @param $argus - 定位尺寸
+ */
+@mixin fixed($argus: '') {
+  @include position(fixed, $argus);
+}
+
+/**
+ * 相对定位 mixin，二次封装自 @mixin position
+ *
+ * @param $argus - 定位尺寸
+ */
+@mixin relative($argus: '') {
+  @include position(relative, $argus);
+}
+
+/**
+ * 清除浮动 mixin
+ *
+ */
+@mixin clearfix() {
+  &::after {
+    content: '';
+    display: table;
+    clear: both;
+  }
+}

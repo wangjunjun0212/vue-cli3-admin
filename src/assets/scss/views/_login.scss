@@ -1,0 +1,23 @@
+@charset 'utf-8';
+
+.login-area {
+  margin: 1rem 0;
+}
+
+.login {
+  padding:20px 30px;
+  label {
+    display: inline-block;
+    width:100px;
+    margin-right: 10px;
+    text-align: right;
+  }
+  button {
+    margin-left:50px;
+    background-color:lightseagreen;
+    border:0;
+    color:#fff;
+    padding:6px 12px;
+    border-radius: 6px;
+  }
+}

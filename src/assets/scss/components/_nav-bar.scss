@@ -1,0 +1,51 @@
+@charset 'utf-8';
+
+.nav-bar {
+  position: relative;
+  overflow: hidden;
+}
+
+.logo {
+  height: 40px;
+}
+
+.el-menu {
+  // background: url('assets/img/logo.png') no-repeat 2em center / auto 70%;
+  padding-left: 5em;
+  transition: background-color 0.5s;
+}
+.login-user {
+  @include absolute(right 2em top 0 bottom 0);
+  line-height: 90px;
+  font-size: 0.8em;
+}
+
+.login-status {
+  background-color: rgb(226, 255, 210);
+}
+
+/**
+  * 导航样式
+*/
+ul,li {
+  list-style: none;
+  width:100%;
+  height:50px;
+  background-color: rgb(226, 255, 210);
+}
+li {
+  float: left;
+  width:100px;
+  text-align: center;
+  line-height: 50px;
+  color:#000;
+  // background: #000;
+}
+
+.loginOut {
+  width:80px;
+  height:30px;
+  background: #f7f7f7;
+  border: 0;
+  border-radius: 10px;
+}
