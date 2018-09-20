@@ -1,10 +1,8 @@
 <template>
-  <header class="nav-bar">
-    <ul mode="horizontal" :router="true" :default-active="activeIndex" :class="{'login-status': $store.state.token}">
-      <li index="/home">首页</li>
-      <li index="/list">列表</li>
-      <li index="/table">表格</li>
-      <li index="/code">二维码展示</li>
+  <header>
+    <ul :router="true" :class="{'login-status': $store.state.token}">
+      <li @click="home">首页</li>
+      <li @click="about">about</li>
     </ul>
     <div class="login-user" v-if="$store.state.token">
       Hello, {{ $store.state.user }}!
@@ -32,6 +30,12 @@ export default {
     logOut () {
       this.$store.commit('logout')
       this.$router.push('/')
+    },
+    about () {
+      this.$router.push('/about')
+    },
+    home () {
+      this.$router.push('/home')
     }
   }
 }
