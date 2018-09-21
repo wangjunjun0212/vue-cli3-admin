@@ -6,6 +6,7 @@
 
 <script>
 export default {
+  name: 'FootInfo',
   data () {
     return {
       time: Date.now()

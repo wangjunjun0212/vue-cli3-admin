@@ -13,9 +13,7 @@
 
 <script>
 export default {
-  mounted () {
-    console.log(this.$store.state.token)
-  },
+  name: 'NavBar',
   data () {
     return {
       activeIndex: ''

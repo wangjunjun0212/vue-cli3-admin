@@ -1,6 +1,32 @@
 @charset 'utf-8';
-
-.demo {
-  padding-top: 27%;
-  // background: url('assets/img/f-35.jpg') no-repeat 0 0 / cover;
+.home-banner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: url('./assets/imgs/f-35.jpg') no-repeat 0 0 / cover;
+  height: 50vh;
+  .home-banner-txt {
+    width:500px;
+    height:30vh;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 1px 1px 4px 2px rgb(213, 224, 223);
+    .my-image {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      p {
+        width:100px;
+        height:100px;
+        border-radius: 50%;
+        background: #ccc;
+      }
+    }
+    img {
+      width:80%;
+      margin-left: 10%;
+      margin-top:20px;
+      line-height: 100px;
+    }
+  }
 }
