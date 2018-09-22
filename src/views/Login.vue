@@ -1,6 +1,6 @@
 <template>
   <section class="login">
-  <div class="blog-slider" ref="blogSlider">
+  <div class="blog-slider" ref="blogSlider" id="io">
     <swiper class="blog-slider__wrp swiper-wrapper" :options="swiperOption">
       <swiper-slide class="blog-slider__item swiper-slide"> 
           <div class="blog-slider__img" v-if="isShow"> 
@@ -51,28 +51,111 @@
       swiperSlide
     },
     mounted() {
-      document.onmousewheel = (e) => {
-        e = e || window.event
-        this.mouseScroll(e)
+      if (this.IEVersion()) {
+        document.documentElement.style.display = 'none'
+        alert('当前浏览器版本过低，请升级或者换其他浏览器试试！')
       }
+      /**
+       * pc端上下滑动
+       */
+      //给页面绑定滑轮滚动事件
+      if (navigator.userAgent.indexOf('Firefox') >= 0 ) {
+        document.getElementById('io').style.display = 'none'
+        alert("暂不支持火狐浏览器查看，请换其他浏览器试试")
+      }
+      if (document.addEventListener) {
+          document.addEventListener('DOMMouseScroll', this.scrollFunc, false)
+      }
+      //滚动滑轮触发scrollFunc方法  获取id是效果的作用域，指效果只在这一块区域有效，超过此区域的不分是滚动条向下滚动
+      window.onmousewheel=document.onmousewheel = this.scrollFunc
+      /**
+       * 移动端左右滑动
+       */
+      this.judge()
     },
     methods:{
-      mouseScroll(e) {
-        this.rolladd(e)
+      scrollFunc (e) {
+        e = e || window.event
+
+        if (e.stopPropagation) e.stopPropagation()
+        else e.cancelBubble = true
+        if (e.preventDefault) e.preventDefault()
+        else e.returnValue = false
+
+        if (e.wheelDelta) {  //判断浏览器IE，谷歌滑轮事件   
+
+          if (e.wheelDelta > 0) { //当滑轮向上滚动时
+            setTimeout(()=>{
+              this.isShow = true
+              this.isActive = false
+              },500)
+          }
+          if (e.wheelDelta < 0) { //当滑轮向下滚动时
+            setTimeout(()=>{
+              this.isActive = true
+              this.isShow = false
+            },500)
+          }
+
+        } else if (e.detail) {  //Firefox滑轮事件
+          alert("暂不支持火狐浏览器，请换其他浏览器试试")
+          document.getElementById('io').style.display = 'none'
+          // if (e.detail > 0) { //当滑轮向上滚动时
+          //   setTimeout(()=>{
+          //     this.isShow = true
+          //     this.isActive = false
+          //   },500)
+          // } else if (e.detail < 0) { //当滑轮向下滚动时
+          //   setTimeout(()=>{
+          //     this.isActive = true
+          //     this.isShow = false
+          //   },500)
+          // }
+
+        }
       },
-      rolladd (e) {
-        let delta = 0
-        delta = (e.wheelDelta) ? e.wheelDelta / 120 : -(e.detail || 0) / 3
-        if(delta > 0 ){
-          setTimeout(()=>{
-            this.isShow = true
-            this.isActive = false
-          },500)
-        }else if(delta < 0){
+      judge() {
+        let _this = this; // 当前this发生变化
+        let el = document.getElementById('io')
+        let startx
+        el.addEventListener('touchstart', (e) => {  
+            var touch = e.changedTouches;  
+            startx = touch[0].clientX
+        })
+        el.addEventListener('touchend', (e) => {
+            let endx
+            var touch = e.changedTouches;  
+            endx = touch[0].clientX
+            _this.cons(startx, endx)
+        })
+      },
+      cons (startx, endx) {
+        if (startx > endx) {
           setTimeout(()=>{
             this.isActive = true
             this.isShow = false
           },500)
+        } else {  
+            setTimeout(()=>{
+              this.isShow = true
+              this.isActive = false
+            },500)
+        }  
+      },
+      IEVersion() {
+        //取得浏览器的userAgent字符串
+        var userAgent = navigator.userAgent;
+        //判断是否IE浏览器
+        var isIE = userAgent.indexOf("compatible") > -1 && userAgent.indexOf("MSIE") > -1;
+        if (isIE) {
+            var reIE = new RegExp("MSIE (\\d+\\.\\d+);");
+            reIE.test(userAgent);
+            var fIEVersion = parseFloat(RegExp["$1"])
+            if (fIEVersion < 10 ) {
+                return true;
+            }
+        } else {
+            return false;
         }
       },
       login () {
